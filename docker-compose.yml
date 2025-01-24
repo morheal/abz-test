@@ -9,11 +9,27 @@ services:
     volumes:
       - redis_data:/data
     networks:
-      - redis_network
+      - app_network
+
+  mysql:
+      image: mysql:5.7
+      container_name: mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: root_password
+        MYSQL_DATABASE: wordpress
+        MYSQL_USER: wordpress
+        MYSQL_PASSWORD: wordpress_password
+      ports:
+        - "3306:3306"
+      volumes:
+        - mysql_data:/var/lib/mysql
+      networks:
+        - app_network
 
 volumes:
   redis_data:
+  mysql_data:
 
 networks:
-  redis_network:
+  app_network:
     driver: bridge
